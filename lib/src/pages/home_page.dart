@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:bible_verse_generator/src/views/my_progress_indicator.dart';
+import 'package:bible_verse_generator/src/views/share_button.dart';
+import 'package:bible_verse_generator/src/views/shuffle_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:bible_verse_generator/src/models/scripture.dart';
 import 'package:bible_verse_generator/src/utilities/string.dart';
@@ -11,9 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLoading = false;
+  bool _isLoading = false;
   bool hasError = false;
   Scripture randomScripture;
+
   @override
   void initState() {
     _fetchScripture();
@@ -22,32 +24,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-       Scaffold(
-        body: Center(
-            child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: isLoading ? CircularProgressIndicator() : _buildCard(),
-        )),
-        floatingActionButton: _buildFab(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      );
-  }
+    final _shuffleButton = ShuffleButton(
+      onPressed: () => _fetchScripture(),
+      isLoading: _isLoading,
+    );
 
-  Padding _buildFab() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: FloatingActionButton.extended(
-        onPressed: () => _fetchScripture(),
-        tooltip: 'Shuffle',
-        label: Text('Shuffle'),
-        icon: isLoading
-            ? MyProgressIndicator(
-                color: Colors.black,
-                size: 16,
-              )
-            : Icon(Icons.shuffle),
+    final _previousButton = FloatingActionButton(
+        child: Icon(Icons.skip_previous), onPressed: _goToPReviousVerse());
+    final _shareButton = ShareButton(
+      scripture: randomScripture,
+    );
+    return Scaffold(
+      body: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: _isLoading ? CircularProgressIndicator() : _buildCard(),
+      )),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          _previousButton,
+          _shuffleButton,
+          _shareButton,
+        ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -67,8 +68,7 @@ class _HomePageState extends State<HomePage> {
   Text _buildMainText() {
     return Text(
       randomScripture.text,
-      style: TextStyle(
-          fontWeight: FontWeight.w600,  fontSize: 24),
+      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
       textAlign: TextAlign.center,
     );
   }
@@ -76,16 +76,14 @@ class _HomePageState extends State<HomePage> {
   Text _buildDetails() {
     return Text(
       '${randomScripture.bookName} ${randomScripture.chapter}:${randomScripture.verse}',
-      style: TextStyle(
-        // color: Colors.white70,
-      ),
+      style: TextStyle(),
       textAlign: TextAlign.center,
     );
   }
 
   Future<void> _fetchScripture() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     final response = await http.get(randomBibleVerseUrl);
 
@@ -94,14 +92,21 @@ class _HomePageState extends State<HomePage> {
           Scripture.fromJson(json.decode(response.body)[0]);
       setState(() {
         randomScripture = _randomScripture;
-        isLoading = false;
+        _isLoading = false;
       });
     } else {
       setState(() {
         hasError = true;
-        isLoading = false;
+        _isLoading = false;
       });
       throw Exception('Failed to load scripture');
     }
+  }
+
+  _goToPReviousVerse() {
+    //TODO: handle go to previous verse
+    /// create an array from which the [Card] will be fetching the verse from
+    /// or show previous verse can just check what the previous verse was on the array
+    /// when previous verse is shown maybe show the next action button
   }
 }
