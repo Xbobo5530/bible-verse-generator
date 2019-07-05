@@ -1,28 +1,33 @@
+import 'package:bible_verse_generator/src/blocs/application_bloc.dart';
 import 'package:bible_verse_generator/src/models/scripture.dart';
+import 'package:bible_verse_generator/src/utilities/string.dart';
+
 import 'package:flutter/material.dart';
 
-class ShareButton extends StatefulWidget {
+class ShareButton extends StatelessWidget {
+  final ApplicationBloc bloc;
   final Scripture scripture;
 
-  const ShareButton({Key key, @required this.scripture}) : super(key: key);
-  @override
-  _ShareButtonState createState() => _ShareButtonState();
-}
-
-class _ShareButtonState extends State<ShareButton> {
+  const ShareButton({
+    Key key,
+    @required this.bloc,
+    @required this.scripture,
+  })  : assert(bloc != null),
+        assert(scripture != null),
+        super(key: key);
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.share),
-      onPressed: widget.scripture == null ? null : () => _handleShare(),
+      onPressed: () => _handleShare(context),
     );
   }
 
-  _handleShare() {
-    //TODO: handle share
-    ///add share package to project
-    ///add the share function here
-    ///the widget is stateless to be able to handle errors
-    ///for when share returns an error
+  _handleShare(BuildContext context) async {
+    bool hasError = await bloc.handleShare(scripture);
+    if (hasError)
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(shareRrrorMessage),
+      ));
   }
 }
