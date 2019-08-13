@@ -13,9 +13,6 @@ class HomePage extends StatelessWidget {
 
     final _shuffleButton =
         ShuffleButton(bloc: _bloc, onPressed: () => _bloc.fetchScripture());
-
-    // final _previousButton = FloatingActionButton(
-    //     child: Icon(Icons.skip_previous), onPressed: _goToPReviousVerse());
     final _infoButton = InfoButton(
       bloc: _bloc,
     );
@@ -31,30 +28,28 @@ class HomePage extends StatelessWidget {
       ],
     );
 
-    return Scaffold(
-      body: Center(
-          child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: StreamBuilder<Scripture>(
-                stream: _bloc.scriptureObservable,
-                builder: (_, AsyncSnapshot<Scripture> snapshot) {
-                  if (!snapshot.hasData) return CircularProgressIndicator();
-                  return Center(
-                    child: ScriptureView(
-                      scripture: snapshot.data,
-                    ),
-                  ); //_buildCard(context, snapshot.data);
-                },
-              ))),
-      floatingActionButton: _buttons,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    return StreamBuilder<Color>(
+      stream: _bloc.randomColorsObservable,
+      builder: (BuildContext context, AsyncSnapshot<Color> snapshot) =>
+          Scaffold(
+        backgroundColor: snapshot.data,
+        body: Center(
+            child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: StreamBuilder<Scripture>(
+                  stream: _bloc.scriptureObservable,
+                  builder: (_, AsyncSnapshot<Scripture> snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    return Center(
+                      child: ScriptureView(
+                        scripture: snapshot.data,
+                      ),
+                    ); //_buildCard(context, snapshot.data);
+                  },
+                ))),
+        floatingActionButton: _buttons,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
-
-  // _goToPReviousVerse() {
-  //   //TODO: handle go to previous verse
-  //   /// create an array from which the [Card] will be fetching the verse from
-  //   /// or show previous verse can just check what the previous verse was on the array
-  //   /// when previous verse is shown maybe show the next action button
-  // }
 }

@@ -13,13 +13,12 @@ class ShareButton extends StatelessWidget {
     @required this.bloc,
     @required this.scripture,
   })  : assert(bloc != null),
-        assert(scripture != null),
         super(key: key);
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.share),
-      onPressed: () => _handleShare(context),
+      onPressed: scripture != null ? null : () => _handleShare(context),
     );
   }
 
@@ -27,7 +26,7 @@ class ShareButton extends StatelessWidget {
     bool hasError = await bloc.handleShare(scripture);
     if (hasError)
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(shareRrrorMessage),
+        content: Text(shareErrorMessage),
       ));
   }
 }

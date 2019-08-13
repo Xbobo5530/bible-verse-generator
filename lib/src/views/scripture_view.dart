@@ -4,21 +4,17 @@ import 'package:flutter/material.dart';
 class ScriptureView extends StatefulWidget {
   final Scripture scripture;
 
-  const ScriptureView({Key key, @required this.scripture})
-      : assert(scripture != null),
-        super(key: key);
+  const ScriptureView({Key key, @required this.scripture}) : super(key: key);
 
   @override
   _ScriptureViewState createState() => _ScriptureViewState();
 }
 
 class _ScriptureViewState extends State<ScriptureView> {
-  // GlobalKey _cardKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.lime,
+    return Container(
+      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
@@ -28,14 +24,6 @@ class _ScriptureViewState extends State<ScriptureView> {
       ),
     );
   }
-
-  // double _getCardHeight() {
-  //   return Random().nextDouble()*100;
-  //   final RenderBox renderBoxRed = _cardKey.currentContext.findRenderObject();
-
-  //   print('height is : ${renderBoxRed.size.height}');
-  //   return renderBoxRed.size.height;
-  // }
 
   Text _buildMainText(Scripture scripture) {
     return Text(

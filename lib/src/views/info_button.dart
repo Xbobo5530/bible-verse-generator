@@ -28,38 +28,32 @@ class InfoButton extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
           final callButton = FlatButton(
             child: Text(callText),
-            onPressed: () => bloc.handleUrl(phoneUrl),
+            onPressed: () => bloc.handleUrl(PHONE_URL),
           );
 
           final emailBUtton = FlatButton(
             child: Text(emailText),
-            onPressed: () => bloc.handleUrl(emailUrl),
+            onPressed: () => bloc.handleUrl(EMAIL_URL),
           );
 
           final whatsappButton = FlatButton(
             child: Text(whatsappText),
-            onPressed: () => bloc.handleUrl(whatsappUrl),
-          );
-
-          final doneButton = FlatButton(
-            child: Text(doneText),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => bloc.handleUrl(WHATSAPP_URL),
           );
 
           if (!snapshot.hasData)
-            return Wrap(
-              children: <Widget>[Center(child: CircularProgressIndicator())],
+            return Center(
+              child: Wrap(
+                children: <Widget>[CircularProgressIndicator()],
+              ),
             );
 
           return AlertDialog(
             title: Text(snapshot.data.appName),
             content: ListTile(
               title: Text(developedByText),
-              subtitle: Row(
-                children: <Widget>[callButton, emailBUtton, whatsappButton],
-              ),
             ),
-            actions: <Widget>[doneButton],
+            actions: <Widget>[callButton, emailBUtton, whatsappButton],
           );
         },
       );
