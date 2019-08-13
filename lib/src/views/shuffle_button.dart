@@ -15,11 +15,11 @@ class ShuffleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: FloatingActionButton.extended(
+      child: FloatingActionButton(
           onPressed: onPressed,
           tooltip: shuffleText,
-          label: Text(shuffleText),
-          icon: StreamBuilder<bool>(
+          // label: Text(shuffleText),
+          child: StreamBuilder<bool>(
             initialData: false,
             stream: bloc.loadingStateObservable,
             builder: (context, AsyncSnapshot<bool> snapshot) => snapshot.data

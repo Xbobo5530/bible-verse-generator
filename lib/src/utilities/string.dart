@@ -2,7 +2,7 @@
 const APP_DOWNLOAD_URL = 'http://bit.ly/2S1vhTR';
 const RANDOM_BIBLE_VERSE_API_URL =
     'https://labs.bible.org/api/?passage=random&type=json';
-const COLOR_API_URL = 'http://www.colr.org/json/colors/random/7';
+const COLOR_API_URL = 'http://www.colr.org/json/colors/random/20';
 const WHATSAPP_URL = 'https://wa.me/:+255622022710';
 const PHONE_URL = 'tel:+255622022710';
 const EMAIL_URL = 'mailto:family@nyayozangu.com';

@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 class ApplicationBloc {
   Scripture initialScripture = Scripture();
   bool initiLoadingState = false;
+  List<dynamic> randomColors = [];
+
   BehaviorSubject<Scripture> _subjectScripture;
   BehaviorSubject<bool> _subjectLoaingState;
   BehaviorSubject<Color> _subjectRandomColor;
@@ -73,11 +75,15 @@ class ApplicationBloc {
       _hasError = true;
     });
     if (_hasError) return;
-    RandomColors randomColors =
-        RandomColors.fromJson(json.decode(response.body));
+    randomColors = RandomColors.fromJson(json.decode(response.body)).hex;
+
+    updateBackgroundColor();
+  }
+
+  void updateBackgroundColor() {
     final random = Random();
     final String colorHexValue =
-        randomColors.hex[random.nextInt(randomColors.hex.length)];
+        randomColors[random.nextInt(randomColors.length)];
     Color randomColor;
 
     if (colorHexValue.length == 0)
