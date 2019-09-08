@@ -1,16 +1,12 @@
-# bible_verse_generator
+# Bible Verse Generator
 
-A new Flutter project.
+A simple beautiful Bible app that generates random verses from the bible.
+The app generates bible verses from a public bible API that you can access [here](https://labs.bible.org/api/)
+The app also uses a public API to generate random color paletes, [here](http://www.colr.org/json/colors/) is link to the color API form colr
+The app is still a work in progress, have fun with it....
+Upcomonig features include:
 
-## Getting Started
+- Automated notifications
+- Image generation and sharing...
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
