@@ -18,7 +18,7 @@ class ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.share),
-      onPressed: scripture != null ? null : () => _handleShare(context),
+      onPressed: scripture == null ? null : () => _handleShare(context),
     );
   }
 

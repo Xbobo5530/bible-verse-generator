@@ -6,7 +6,7 @@ class ScriptureView extends StatelessWidget {
 
   const ScriptureView({Key key, @required this.scripture}) : super(key: key);
 
- @override
+  @override
   Widget build(BuildContext context) {
     final _backgroundSize = MediaQuery.of(context).size.width;
     return Padding(

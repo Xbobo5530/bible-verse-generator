@@ -46,7 +46,7 @@ class ApplicationBloc {
   }
 
   Future<bool> handleShare(Scripture scripture) async {
-    bool _hasError = true;
+    bool _hasError = false;
     final sharableScripture =
         '${scripture.text}\n${scripture.bookName} ${scripture.chapter}: ${scripture.verse}\n$APP_DOWNLOAD_URL';
     await Share.share(sharableScripture).catchError((error) {
@@ -71,7 +71,7 @@ class ApplicationBloc {
 
     http.Response response =
         await http.get(RANDOM_COLORS_API_URL).catchError((error) {
-      print('error on fetchin random colors: $error');
+      print('error on fetching random colors: $error');
       _hasError = true;
     });
     if (_hasError) return;
